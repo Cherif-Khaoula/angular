@@ -1,0 +1,71 @@
+<div class="rendezvous-container">
+  <h2>Liste des Rendez-vous</h2>
+
+ 
+  <!-- Liste des rendez-vous -->
+  <table *ngIf="!selectedRendezvous">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Professionnel</th>
+        <th>Date</th>
+        <th>Heure</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rdv of rendezvous">
+        <td>{{ rdv.id }}</td>
+        <td>{{ getClientName(rdv.clientId) }}</td>
+        <td>{{ getProfessionnelName(rdv.professionnelId) }}</td>
+        <td>{{ rdv.date }}</td>
+        <td>{{ rdv.heure }}</td>
+        <td>{{ rdv.statut }}</td>
+        <td>
+          <button (click)="modifierRendezvous(rdv)">Modifier</button>
+          <button (click)="supprimerRendezvous(rdv.id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+ <!-- Formulaire modal pour modifier un rendez-vous -->
+ <div *ngIf="selectedRendezvous" class="modal">
+  <form (ngSubmit)="saveModification()">
+    <h3>Modifier Rendez-vous</h3>
+    
+    <label for="client">Client</label>
+    <select [(ngModel)]="selectedRendezvous.client" name="client" required>
+      <option *ngFor="let client of clients" [ngValue]="client">
+        {{ client.nom }}
+      </option>
+    </select>
+
+    <label for="professionnel">Professionnel</label>
+    <select [(ngModel)]="selectedRendezvous.professionnel" name="professionnel" required>
+      <option *ngFor="let professionnel of professionnels" [ngValue]="professionnel">
+        {{ professionnel.nom }}
+      </option>
+    </select>
+
+    <label for="date">Date</label>
+    <input type="date" [(ngModel)]="selectedRendezvous.date" name="date" required />
+
+    <label for="heure">Heure</label>
+    <input type="time" [(ngModel)]="selectedRendezvous.heure" name="heure" required />
+    
+    <label for="statut">Statut</label>
+    <select [(ngModel)]="selectedRendezvous.statut" name="statut" required>
+      <option value="En attente">En attente</option>
+      <option value="Confirmé">Confirmé</option>
+      <option value="Annulé">Annulé</option>
+    </select> 
+    
+    <div class="actions">
+      <button type="submit">Sauvegarder</button>
+      <button type="button" (click)="cancelModification()">Annuler</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,42 @@
+<h2>Liste des Clients</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{ client.nom }}</td>
+      <td>{{ client.email }}</td>
+      <td>{{ client.numeroTelephone }}</td>
+      <td>
+        <button (click)="modifierClient(client.id)">Modifier</button>
+        <button (click)="supprimerClient(client.id)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Formulaire d'édition -->
+<div *ngIf="clientToEdit" class="modal">
+  <h3>Modifier le Client</h3>
+  <form (ngSubmit)="sauvegarderModification()">
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" [(ngModel)]="clientToEdit.nom" name="nom" required />
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="clientToEdit.email" name="email" required />
+    
+    <label for="numeroTelephone">Téléphone:</label>
+    <input type="tel" id="numeroTelephone" [(ngModel)]="clientToEdit.numeroTelephone" name="numeroTelephone" required />
+    
+    <div class="actions">
+      <button type="submit">Sauvegarder</button>
+      <button type="button" (click)="annulerModification()">Annuler</button>
+    </div>
+  </form>
+</div>

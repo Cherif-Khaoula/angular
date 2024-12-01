@@ -1,0 +1,52 @@
+<div class="disponibilite-container">
+             <h2>Gestion des Disponibilités</h2>
+           <!--  <button (click)="ajouterDisponibilite()">Ajouter Disponibilité</button>-->
+             <table>
+               <thead>
+                 <tr>
+                   <th>ID</th>
+                   <th>Professionnel</th>
+                   <th>Date</th>
+                   <th>Heure de Début</th>
+                   <th>Heure de Fin</th>
+                   <th>Actions</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr *ngFor="let dispo of disponibilites">
+                   <td>{{ dispo.id }}</td>
+                   <td>{{ getProfessionnelName(dispo.professionnelId) }}</td>
+                   <td>{{ dispo.date }}</td>
+                   <td>{{ dispo.heureDebut }}</td>
+                   <td>{{ dispo.heureFin }}</td>
+                   <td>
+                     <button (click)="modifierDisponibilite(dispo)">Modifier</button>
+                     <button (click)="supprimerDisponibilite(dispo.id)">Supprimer</button>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           
+             <!-- Formulaire modal -->
+             <div *ngIf="selectedDisponibilite" class="modal">
+               <form (ngSubmit)="saveDisponibilite()">
+                 <label for="professionnel">Professionnel</label>
+                 <select [(ngModel)]="selectedDisponibilite.professionnelId" name="professionnel" required>
+                   <option *ngFor="let prof of professionnels" [value]="prof.id">{{ prof.nom }}</option>
+                 </select>
+           
+                 <label for="date">Date</label>
+                 <input type="date" [(ngModel)]="selectedDisponibilite.date" name="date" required />
+           
+                 <label for="heureDebut">Heure de Début</label>
+                 <input type="time" [(ngModel)]="selectedDisponibilite.heureDebut" name="heureDebut" required />
+           
+                 <label for="heureFin">Heure de Fin</label>
+                 <input type="time" [(ngModel)]="selectedDisponibilite.heureFin" name="heureFin" required />
+           
+                 <button type="submit">Sauvegarder</button>
+                 <button type="button" (click)="cancelDisponibilite()">Annuler</button>
+               </form>
+             </div>
+           </div>
+           

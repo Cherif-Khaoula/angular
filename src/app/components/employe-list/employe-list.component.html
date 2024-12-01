@@ -1,0 +1,42 @@
+<h2>Liste des Employés</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Spécialité</th>
+      <th>Téléphone</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employe of professionnels">
+      <td>{{ employe.nom }}</td>
+      <td>{{ employe.specialite }}</td>
+      <td>{{ employe.numeroTelephone }}</td>
+      <td>
+        <button (click)="modifierEmploye(employe.id)">Modifier</button>
+        <button (click)="supprimerEmploye(employe.id)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Formulaire de modification -->
+<div *ngIf="employeToEdit" class="modal">
+  <h3>Modifier l'Employé</h3>
+  <form (ngSubmit)="sauvegarderModification()">
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" [(ngModel)]="employeToEdit.nom" name="nom" required />
+    
+    <label for="specialite">Spécialité:</label>
+    <input type="text" id="specialite" [(ngModel)]="employeToEdit.specialite" name="specialite" required />
+    
+    <label for="numeroTelephone">Téléphone:</label>
+    <input type="tel" id="numeroTelephone" [(ngModel)]="employeToEdit.numeroTelephone" name="numeroTelephone" required />
+    
+    <div class="actions">
+      <button type="submit">Sauvegarder</button>
+      <button type="button" (click)="annulerModification()">Annuler</button>
+    </div>
+  </form>
+</div>
